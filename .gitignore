@@ -1,3 +1,6 @@
+# Folders containing binary files
+bin/
+
 # Compiled class file
 *.class
 
