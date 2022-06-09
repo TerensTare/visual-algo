@@ -2,6 +2,9 @@ package anims;
 
 import javafx.stage.Stage;
 
+// TODO(Terens):
+// A ka shance qe AnimationNode.next te jete perhere != null?
+
 // Nje klase qe percakton nje animacion bazik. 
 public abstract class Animation {
     public abstract void animate(Stage stage);
@@ -15,7 +18,7 @@ class AnimationNode extends Animation {
     private Animation first; // Animacioni i pare.
     private Animation next; // Animacioni vijues. Nqs eshte null, ky eshte animacioni i fundit.
 
-    public AnimationNode(Animation first, Animation next) {
+    AnimationNode(Animation first, Animation next) {
         this.first = first;
         this.next = next;
     }
