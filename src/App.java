@@ -31,14 +31,14 @@ public class App extends Application {
         HBox inputBox = new HBox();
         inputBox.setPadding(new Insets(10));
         inputBox.setSpacing(10);
-        inputBox.getChildren().addAll(txt,enqueue,dequeue,find);
+        inputBox.getChildren().addAll(txt, enqueue, dequeue, find);
         BorderPane bp = new BorderPane();
         VBox root = new VBox(inputBox);
         root.setAlignment(Pos.CENTER);
         bp.setTop(root);
         HBox queue = new HBox();
         queue.setSpacing(20);
-        enqueue.setOnAction(new EventHandler<ActionEvent>(){
+        enqueue.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 StackPane st = new StackPane();
@@ -47,19 +47,18 @@ public class App extends Application {
             }
         });
         root.getChildren().add(queue);
-        stage.setScene(new Scene(bp,1200,600));
+        stage.setScene(new Scene(bp, 1200, 600));
         stage.show();
     }
-
 
     public static void main(String[] args) throws Exception {
         launch(args);
     }
-    private static <T> StackPane createNode(TextField value){
+
+    private static <T> StackPane createNode(TextField value) {
         StackPane pane = new StackPane(
-            new Rectangle(200,100,Color.AQUAMARINE),
-            new Label(value.getText())
-        );   
+                new Rectangle(200, 100, Color.AQUAMARINE),
+                new Label(value.getText()));
         return pane;
     }
 }
