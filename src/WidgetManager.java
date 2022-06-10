@@ -49,11 +49,11 @@ public class WidgetManager {
         return enqueue;
     }
 
-    Button dequeue() {
+    public Button dequeue() {
         return dequeue;
     }
 
-    Button find() {
+    public Button find() {
         return find;
     }
 
