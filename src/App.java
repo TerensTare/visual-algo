@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+
+import javax.swing.Action;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,12 +42,24 @@ public class App extends Application {
         bp.setTop(root);
         HBox queue = new HBox();
         queue.setSpacing(20);
+        ArrayList<TextField> list = new ArrayList<>(); // list qe ruan cdo txt
         enqueue.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 StackPane st = new StackPane();
                 st = createNode(txt);
                 queue.getChildren().add(st);
+                list.add(txt); // shton txt n list q t rujm cdo input, mund t perdoret pr funksione t tjera tn
+                               // e km ber pr dequeue
+            }
+        });
+        dequeue.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent arg0) {
+                StackPane st = new StackPane();
+                st = createNode(list.get(0)); // krijon n st me index 0 t listes se txt
+                int index = queue.getChildren().indexOf(st) + 1; // mer index te st tek children t queue
+                queue.getChildren().remove(index); // fshin child n index, q do jet i pari
             }
         });
         root.getChildren().add(queue);
