@@ -1,10 +1,16 @@
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.effect.Glow;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -17,9 +23,9 @@ import javafx.scene.shape.Rectangle;
 // 4. If you did step 2. add a call to setup<WidgetName> in the constructor
 
 public class WidgetManager {
-    private ArrayList<TextField> list; // nuk perdoret m tek dequeue por ende ruan infot e txtfield
+    private ArrayList<String> list; // perdoret tek find, shih pr shembull (ruan str txtfield)
 
-    private HBox queue; // queue frontend
+    private static HBox queue; // queue frontend
     private TextField txt; // duhet ta ruajme ketu sepse aksesohen nga butonat
     // butonat
     private Button enqueue;
@@ -78,14 +84,23 @@ public class WidgetManager {
         enqueue.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                StackPane st = createNode(txt);
-                queue.getChildren().add(st);
-                list.add(txt); // shton txt n list q t rujm cdo input, mund t perdoret pr funksione t tjera tn
-                               // e km ber pr dequeue
-                txt.clear();
+                if (txt.getText() == "") {
+                    Alert noText = new Alert(AlertType.INFORMATION);
+                    noText.setTitle("Alert");
+                    noText.setHeaderText("No Inputs!");
+                    noText.setContentText("Please input any information");
+                    noText.show();
+                } else {
+                    StackPane st = createNode(txt);
+                    queue.getChildren().add(st);
+                    list.add(txt.getText()); // shton txt n list q t rujm cdo input, mund t perdoret pr funksione t
+                                             // tjera tn
+                    // e km ber pr dequeue
+                    txt.clear();
 
-                // shfaqi butonat e fshehur
-                showButtons(true);
+                    // shfaqi butonat e fshehur
+                    showButtons(true);
+                }
             }
         });
     }
@@ -124,13 +139,40 @@ public class WidgetManager {
     private void setupFindButton() {
         find = new Button("Find");
 
-        // TODO: handle click event
+        find.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent arg0) {
+                int index = list.indexOf(txt.getText()); // index i node q duhet gjet
+                if (index == -1) {
+                    Alert noText = new Alert(AlertType.INFORMATION);
+                    noText.setTitle("Alert");
+                    noText.setHeaderText("No Such Inputs!");
+                    noText.setContentText("Please input another value");
+                    noText.show();
+                } else {
+                    ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+                    Glow glow = new Glow(0.5);
+                    queue.getChildren().get(index).setEffect(glow);
+                    executorService.schedule(WidgetManager::setGlow, 2, TimeUnit.SECONDS); // fik glow mas 2 sec
+                }
+            }
+
+        });
     }
 
     private void showButtons(boolean show) {
         dequeue.setVisible(show);
         clear.setVisible(show);
         find.setVisible(show);
+    }
+
+    private static void setGlow() {
+        Glow glow = new Glow(0);
+        int size = queue.getChildren().size();
+        for (int i = 0; i < size; i++) {
+            queue.getChildren().get(i).setEffect(glow);
+        }
     }
 
     private static <T> StackPane createNode(TextField value) {
