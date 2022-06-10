@@ -10,6 +10,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+// Checklist before inserting a new widget:
+// 1. Add a variable to WidgetManager
+// 2. (optional) Add a setup<WidgetName> method to WidgetManager
+// 3. create the widget on the constructor
+// 4. If you did step 2. add a call to setup<WidgetName> in the constructor
+
 public class WidgetManager {
     private ArrayList<TextField> list;
 
