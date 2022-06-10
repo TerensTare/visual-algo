@@ -19,12 +19,13 @@ public class App extends Application {
 
         Button enqueue = widgets.enqueue();
         Button dequeue = widgets.dequeue();
+        Button clear = widgets.clear();
         Button find = widgets.find();
 
         HBox inputBox = new HBox();
         inputBox.setPadding(new Insets(10));
         inputBox.setSpacing(10);
-        inputBox.getChildren().addAll(txt, enqueue, dequeue, find);
+        inputBox.getChildren().addAll(txt, enqueue, dequeue, clear, find);
 
         VBox root = new VBox(inputBox, widgets.queue());
         root.setAlignment(Pos.CENTER);
