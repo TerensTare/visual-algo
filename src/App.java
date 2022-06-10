@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-
-import javax.swing.Action;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import java.util.ArrayList;
 
 public class App extends Application {
     @Override
@@ -43,14 +40,23 @@ public class App extends Application {
         HBox queue = new HBox();
         queue.setSpacing(20);
         ArrayList<TextField> list = new ArrayList<>(); // list qe ruan cdo txt
+        if (list.isEmpty()) {
+            dequeue.setVisible(false);
+            find.setVisible(false);
+        }
         enqueue.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 StackPane st = new StackPane();
                 st = createNode(txt);
                 queue.getChildren().add(st);
+                txt.clear();
                 list.add(txt); // shton txt n list q t rujm cdo input, mund t perdoret pr funksione t tjera tn
                                // e km ber pr dequeue
+                if (!list.isEmpty()) {
+                    dequeue.setVisible(true);
+                    find.setVisible(true);
+                }
             }
         });
         dequeue.setOnAction(new EventHandler<ActionEvent>() {
@@ -60,6 +66,11 @@ public class App extends Application {
                 st = createNode(list.get(0)); // krijon n st me index 0 t listes se txt
                 int index = queue.getChildren().indexOf(st) + 1; // mer index te st tek children t queue
                 queue.getChildren().remove(index); // fshin child n index, q do jet i pari
+                list.remove(index);
+                if (list.isEmpty()) {
+                    dequeue.setVisible(false);
+                    find.setVisible(false);
+                }
             }
         });
         root.getChildren().add(queue);
