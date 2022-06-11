@@ -140,7 +140,7 @@ public class WidgetManager {
 
             @Override
             public void handle(ActionEvent arg0) {
-                int index = list.indexOf(txt.getText()); // index of desired node
+                int index = list.indexOf(txt.getText().trim()); // index of desired node
                 if (index == -1) {
                     Alert noText = new Alert(AlertType.INFORMATION);
                     noText.setTitle("Alert");
