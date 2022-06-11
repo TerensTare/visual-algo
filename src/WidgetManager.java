@@ -38,7 +38,7 @@ public class WidgetManager {
         list = new ArrayList<>();
 
         queue = new FlowPane();
-        
+        queue.setHgap(10);
         queue.setVgap(20);
 
         txt = new TextField();
@@ -179,7 +179,7 @@ public class WidgetManager {
             rect,
             new Label(value.getText())
             );
-        pane.setPadding(new Insets(20));
+       
         return pane;
     }
 }

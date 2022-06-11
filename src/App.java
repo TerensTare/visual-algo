@@ -30,12 +30,13 @@ public class App extends Application {
         buttonPane.add(find, 4,1);
         buttonPane.setHgap(10);
 
-        inputBox.setPadding(new Insets(10));
+        inputBox.setPadding(new Insets(0, 0, 20, 0));
         inputBox.setSpacing(60);
         inputBox.getChildren().addAll(txt, buttonPane);
 
         VBox root = new VBox(inputBox, widgets.queue());
         root.setAlignment(Pos.CENTER);
+        root.setPadding(new Insets(10, 10, 10, 10));
 
         BorderPane bp = new BorderPane();
         bp.setTop(root);
