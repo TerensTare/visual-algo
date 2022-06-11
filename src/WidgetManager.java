@@ -25,7 +25,7 @@ import javafx.scene.shape.Rectangle;
 public class WidgetManager {
     private ArrayList<String> list; // perdoret tek find, shih pr shembull (ruan str txtfield)
 
-    private static HBox queue; // queue frontend
+    private HBox queue; // queue frontend
     private TextField txt; // duhet ta ruajme ketu sepse aksesohen nga butonat
     // butonat
     private Button enqueue;
@@ -154,10 +154,9 @@ public class WidgetManager {
                     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
                     Glow glow = new Glow(0.5);
                     queue.getChildren().get(index).setEffect(glow);
-                    executorService.schedule(WidgetManager::setGlow, 2, TimeUnit.SECONDS); // fik glow mas 2 sec
+                    executorService.schedule(() -> setGlow(queue), 2, TimeUnit.SECONDS); // fik glow mas 2 sec
                 }
             }
-
         });
     }
 
@@ -167,7 +166,7 @@ public class WidgetManager {
         find.setVisible(show);
     }
 
-    private static void setGlow() {
+    private static void setGlow(HBox queue) {
         Glow glow = new Glow(0);
         int size = queue.getChildren().size();
         for (int i = 0; i < size; i++) {
