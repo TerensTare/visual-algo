@@ -23,11 +23,10 @@ import javafx.scene.shape.Rectangle;
 // 4. If you did step 2. add a call to setup<WidgetName> in the constructor
 
 public class WidgetManager {
-    private ArrayList<String> list; // perdoret tek find, shih pr shembull (ruan str txtfield)
+    private ArrayList<String> list; // list which saves txtfield string inpunts, used in find
 
     private HBox queue; // queue frontend
-    private TextField txt; // duhet ta ruajme ketu sepse aksesohen nga butonat
-    // butonat
+    private TextField txt; // inpunts are saved here to be accessed from the buttons
     private Button enqueue;
     private Button dequeue;
     private Button find;
@@ -48,7 +47,7 @@ public class WidgetManager {
         setupFindButton();
         setupClearButton();
 
-        // fillimisht butonat qe duan nje queue jo boshe nuk shfaqen
+        // firstly methods which require a non-empty queue are hidden
         showButtons(false);
     }
 
@@ -76,7 +75,7 @@ public class WidgetManager {
         return find;
     }
 
-    // metodat private
+    // private methods
 
     private void setupEnqueueButton() {
         enqueue = new Button("Enqueue");
@@ -93,12 +92,10 @@ public class WidgetManager {
                 } else {
                     StackPane st = createNode(txt);
                     queue.getChildren().add(st);
-                    list.add(txt.getText()); // shton txt n list q t rujm cdo input, mund t perdoret pr funksione t
-                                             // tjera tn
-                    // e km ber pr dequeue
+                    list.add(txt.getText()); // adds the contents of txtfield to the list
                     txt.clear();
 
-                    // shfaqi butonat e fshehur
+                    // makes buttons visible
                     showButtons(true);
                 }
             }
@@ -143,7 +140,7 @@ public class WidgetManager {
 
             @Override
             public void handle(ActionEvent arg0) {
-                int index = list.indexOf(txt.getText()); // index i node q duhet gjet
+                int index = list.indexOf(txt.getText()); // index of desired node
                 if (index == -1) {
                     Alert noText = new Alert(AlertType.INFORMATION);
                     noText.setTitle("Alert");
@@ -154,7 +151,7 @@ public class WidgetManager {
                     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
                     Glow glow = new Glow(0.5);
                     queue.getChildren().get(index).setEffect(glow);
-                    executorService.schedule(() -> setGlow(queue), 2, TimeUnit.SECONDS); // fik glow mas 2 sec
+                    executorService.schedule(() -> setGlow(queue), 2, TimeUnit.SECONDS); // turns off glow after 2 sec
                 }
             }
         });
@@ -177,8 +174,7 @@ public class WidgetManager {
     private static <T> StackPane createNode(TextField value) {
         StackPane pane = new StackPane(
                 new Rectangle(200, 100, Color.AQUAMARINE),
-                new Label(value.getText()) //
-        );
+                new Label(value.getText()));
         return pane;
     }
 }
