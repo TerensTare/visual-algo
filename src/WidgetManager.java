@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -82,12 +83,12 @@ public class WidgetManager {
 
     private void setupEnqueueButton() {
         enqueue = new Button("Enqueue");
-        
+
         enqueue.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (txt.getText().trim().isEmpty()) {
-                    txt.setPromptText("Try writing a number, eg. 10"); //to set the hint text
+                    txt.setPromptText("Try writing a number, eg. 10"); // to set the hint text
                     txt.getParent().requestFocus();
                 } else {
                     StackPane st = createNode(txt);
@@ -149,8 +150,10 @@ public class WidgetManager {
                     noText.show();
                 } else {
                     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-                    Glow glow = new Glow(0.5);
-                    queue.getChildren().get(index).setEffect(glow);
+                    DropShadow shadow = new DropShadow();
+                    shadow.setRadius(10);
+                    shadow.setColor(Color.web("#333333"));
+                    queue.getChildren().get(index).setEffect(shadow);
                     executorService.schedule(() -> setGlow(queue), 2, TimeUnit.SECONDS); // turns off glow after 2 sec
                 }
             }
@@ -164,22 +167,17 @@ public class WidgetManager {
     }
 
     private static void setGlow(FlowPane queue) {
-        Glow glow = new Glow(0);
         int size = queue.getChildren().size();
         for (int i = 0; i < size; i++) {
-            queue.getChildren().get(i).setEffect(glow);
+            queue.getChildren().get(i).setEffect(null);
         }
     }
 
     private static <T> StackPane createNode(TextField value) {
         Rectangle rect = new Rectangle(100, 50, Color.AQUAMARINE);
-        rect.setArcWidth(30.0); 
-        rect.setArcHeight(20.0);  
-        StackPane pane = new StackPane(
-            rect,
-            new Label(value.getText())
-            );
-       
+        rect.setArcWidth(30.0);
+        rect.setArcHeight(20.0);
+        StackPane pane = new StackPane(rect, new Label(value.getText()));
         return pane;
     }
 }
