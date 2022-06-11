@@ -84,7 +84,7 @@ public class WidgetManager {
         enqueue.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (txt.getText() == "") {
+                if (txt.getText().trim().isEmpty()) {
                     Alert noText = new Alert(AlertType.INFORMATION);
                     noText.setTitle("Alert");
                     noText.setHeaderText("No Inputs!");
