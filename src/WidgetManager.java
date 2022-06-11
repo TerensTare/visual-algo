@@ -18,9 +18,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
+import javafx.animation.FadeTransition;
 import javafx.animation.FillTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 // Checklist before inserting a new widget:
 // 1. Add a variable to WidgetManager
@@ -113,9 +112,17 @@ public class WidgetManager {
         dequeue.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
-                queue.getChildren().remove(0);
-                list.remove(0);
-                
+
+                var str = animateNodeRemoval(queue.getChildren().get(0)); // create str with node 0
+                str.play();
+                str.setOnFinished(new EventHandler<ActionEvent>() { // executes when when seqtransition ends
+                    @Override
+                    public void handle(ActionEvent arg0) {
+                        queue.getChildren().remove(0);
+                        list.remove(0);
+                    }
+                });
+
                 if (queue.getChildren().size() == 0) {
                     showButtons(false);
                 }
@@ -156,7 +163,7 @@ public class WidgetManager {
                     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
                     DropShadow shadow = new DropShadow();
                     shadow.setRadius(10);
-                    shadow.setColor(Color.web("#333333"));
+                    shadow.setColor(Color.WHITE);
                     queue.getChildren().get(index).setEffect(shadow);
                     executorService.schedule(() -> setGlow(queue), 2, TimeUnit.SECONDS); // turns off glow after 2 sec
                 }
@@ -182,16 +189,15 @@ public class WidgetManager {
         rect.setArcWidth(30.0);
         rect.setArcHeight(20.0);
 
-        rect = (Rectangle) animateNode(rect);
+        rect = (Rectangle) animateNodeCreation(rect);
         StackPane pane = new StackPane(rect, new Label(value.getText()));
 
         return pane;
     }
 
+    private static Node animateNodeCreation(Node rect) {
 
-    private static Node animateNode(Node rect){
-        
-        var fltr = new FillTransition(Duration.millis(2000), (Shape) rect,Color.LIGHTSEAGREEN, Color.AQUAMARINE);
+        var fltr = new FillTransition(Duration.millis(1000), (Shape) rect, Color.LIGHTSEAGREEN, Color.AQUAMARINE);
         fltr.setCycleCount(2);
         fltr.setAutoReverse(true);
 
@@ -200,5 +206,18 @@ public class WidgetManager {
         str.play();
 
         return rect;
+    }
+
+    private static SequentialTransition animateNodeRemoval(Node node) { // creates seqtransition
+
+        var ft = new FadeTransition(Duration.millis(500), node);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.0);
+
+        var str = new SequentialTransition();
+        str.getChildren().add(ft);
+        str.play();
+
+        return str;
     }
 }
