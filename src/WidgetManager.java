@@ -23,10 +23,10 @@ import javafx.scene.shape.Rectangle;
 // 4. If you did step 2. add a call to setup<WidgetName> in the constructor
 
 public class WidgetManager {
-    private ArrayList<String> list; // list which saves txtfield string inpunts, used in find
+    private ArrayList<String> list; // list which saves txtfield string inputs, used in find
 
     private HBox queue; // queue frontend
-    private TextField txt; // inpunts are saved here to be accessed from the buttons
+    private TextField txt; // inputs are saved here to be accessed from the buttons
     private Button enqueue;
     private Button dequeue;
     private Button find;
@@ -92,7 +92,7 @@ public class WidgetManager {
                 } else {
                     StackPane st = createNode(txt);
                     queue.getChildren().add(st);
-                    list.add(txt.getText()); // adds the contents of txtfield to the list
+                    list.add(txt.getText().trim()); // adds the contents of txtfield to the list
                     txt.clear();
 
                     // makes buttons visible
