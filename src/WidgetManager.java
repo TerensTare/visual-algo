@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,6 +16,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 import javafx.animation.FillTransition;
 import javafx.animation.RotateTransition;
@@ -113,7 +115,7 @@ public class WidgetManager {
             public void handle(ActionEvent arg0) {
                 queue.getChildren().remove(0);
                 list.remove(0);
-
+                
                 if (queue.getChildren().size() == 0) {
                     showButtons(false);
                 }
@@ -180,8 +182,23 @@ public class WidgetManager {
         rect.setArcWidth(30.0);
         rect.setArcHeight(20.0);
 
+        rect = (Rectangle) animateNode(rect);
         StackPane pane = new StackPane(rect, new Label(value.getText()));
 
         return pane;
+    }
+
+
+    private static Node animateNode(Node rect){
+        
+        var fltr = new FillTransition(Duration.millis(2000), (Shape) rect,Color.LIGHTSEAGREEN, Color.AQUAMARINE);
+        fltr.setCycleCount(2);
+        fltr.setAutoReverse(true);
+
+        var str = new SequentialTransition();
+        str.getChildren().add(fltr);
+        str.play();
+
+        return rect;
     }
 }
