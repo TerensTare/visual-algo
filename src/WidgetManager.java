@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.effect.Glow;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -25,7 +25,7 @@ import javafx.scene.shape.Rectangle;
 public class WidgetManager {
     private ArrayList<String> list; // list which saves txtfield string inputs, used in find
 
-    private HBox queue; // queue frontend
+    private FlowPane queue; // queue frontend
     private TextField txt; // inputs are saved here to be accessed from the buttons
     private Button enqueue;
     private Button dequeue;
@@ -36,11 +36,13 @@ public class WidgetManager {
     public WidgetManager() {
         list = new ArrayList<>();
 
-        queue = new HBox();
-        queue.setSpacing(20);
+        queue = new FlowPane();
+        queue.setHgap(20);
+        queue.setVgap(20);
 
         txt = new TextField();
         txt.setPromptText("Enter a value");
+        txt.setPrefSize(180, 20);
 
         setupEnqueueButton();
         setupDequeueButton();
@@ -51,7 +53,7 @@ public class WidgetManager {
         showButtons(false);
     }
 
-    public HBox queue() {
+    public FlowPane queue() {
         return queue;
     }
 
@@ -79,16 +81,13 @@ public class WidgetManager {
 
     private void setupEnqueueButton() {
         enqueue = new Button("Enqueue");
-
+        
         enqueue.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (txt.getText().trim().isEmpty()) {
-                    Alert noText = new Alert(AlertType.INFORMATION);
-                    noText.setTitle("Alert");
-                    noText.setHeaderText("No Inputs!");
-                    noText.setContentText("Please input any information");
-                    noText.show();
+                    txt.setPromptText("Try writing a number, eg. 10"); //to set the hint text
+                    txt.getParent().requestFocus();
                 } else {
                     StackPane st = createNode(txt);
                     queue.getChildren().add(st);
@@ -163,7 +162,7 @@ public class WidgetManager {
         find.setVisible(show);
     }
 
-    private static void setGlow(HBox queue) {
+    private static void setGlow(FlowPane queue) {
         Glow glow = new Glow(0);
         int size = queue.getChildren().size();
         for (int i = 0; i < size; i++) {
