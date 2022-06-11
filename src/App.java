@@ -25,8 +25,8 @@ public class App extends Application {
         scene.setFill(new RadialGradient(
         0, 0, 0, 0, 1, true,                  
         CycleMethod.NO_CYCLE,                 
-        new Stop(0, Color.web("#81c483")),    
-        new Stop(1, Color.web("#fcc200")))
+        new Stop(0, Color.web("#636363")),    
+        new Stop(1, Color.web("#a2ab58")))
 );
 
         WidgetManager widgets = new WidgetManager();

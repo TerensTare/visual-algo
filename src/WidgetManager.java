@@ -15,7 +15,11 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
+import javafx.util.Duration;
+import javafx.animation.FillTransition;
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 // Checklist before inserting a new widget:
 // 1. Add a variable to WidgetManager
 // 2. (optional) Add a setup<WidgetName> method to WidgetManager
@@ -172,10 +176,12 @@ public class WidgetManager {
     }
 
     private static <T> StackPane createNode(TextField value) {
-        Rectangle rect = new Rectangle(100, 50, Color.AQUAMARINE);
+        Rectangle rect = new Rectangle(100, 50);
         rect.setArcWidth(30.0);
         rect.setArcHeight(20.0);
+
         StackPane pane = new StackPane(rect, new Label(value.getText()));
+
         return pane;
     }
 }
