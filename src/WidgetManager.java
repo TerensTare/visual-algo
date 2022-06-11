@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,7 +38,7 @@ public class WidgetManager {
         list = new ArrayList<>();
 
         queue = new FlowPane();
-        queue.setHgap(20);
+        
         queue.setVgap(20);
 
         txt = new TextField();
@@ -171,9 +172,14 @@ public class WidgetManager {
     }
 
     private static <T> StackPane createNode(TextField value) {
+        Rectangle rect = new Rectangle(100, 50, Color.AQUAMARINE);
+        rect.setArcWidth(30.0); 
+        rect.setArcHeight(20.0);  
         StackPane pane = new StackPane(
-                new Rectangle(200, 100, Color.AQUAMARINE),
-                new Label(value.getText()));
+            rect,
+            new Label(value.getText())
+            );
+        pane.setPadding(new Insets(20));
         return pane;
     }
 }
