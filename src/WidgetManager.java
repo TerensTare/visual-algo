@@ -137,8 +137,21 @@ public class WidgetManager {
 
             @Override
             public void handle(ActionEvent arg0) {
-                queue.getChildren().removeAll(queue.getChildren());
-                list.clear();
+
+                var str = animateQueueFade(queue, 1.0, 0.0);
+                str.play();
+                str.setOnFinished(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent arg0) {
+                        queue.getChildren().removeAll(queue.getChildren());
+                        list.clear();
+                        var str = animateQueueFade(queue, 0.0, 1.0);
+                        str.play();
+                    }
+
+                });
+
                 showButtons(false);
             }
         });
@@ -217,6 +230,18 @@ public class WidgetManager {
         var str = new SequentialTransition();
         str.getChildren().add(ft);
         str.play();
+
+        return str;
+    }
+
+    private static SequentialTransition animateQueueFade(FlowPane pane, double start, double end) {
+
+        var ft = new FadeTransition(Duration.millis(500), pane);
+        ft.setFromValue(start);
+        ft.setToValue(end);
+
+        var str = new SequentialTransition();
+        str.getChildren().add(ft);
 
         return str;
     }
