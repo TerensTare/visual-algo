@@ -84,7 +84,7 @@ public class WidgetManager {
         return find;
     }
 
-    public Button removeDublicates(){
+    public Button removeDublicates() {
         return removeDublicates;
     }
 
@@ -189,28 +189,31 @@ public class WidgetManager {
             }
         });
     }
+
     private void setUpRemoveDublicatesButton(){
         removeDublicates = new Button("Remove Dublicates");
         removeDublicates.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
-            //    Set<String> set = new HashSet<>();
-            //    for(int i = 0;i<list.size();i++){
-            //         if(set.contains(list.get(i))){
-                // queue.getChildren().remove(j);
-                // list.remove(j);
-            //         }
-            //         set.add(list.get(i));
-            //     }
-            //     set.clear();
-            for(int i = 0;i<list.size();i++){
-                    for(int j = i+1;j<list.size();j++){
-                        if(list.get(j).equals(list.get(i))){
-                            queue.getChildren().remove(j);
-                            list.remove(j);
-                        }
+               Set<String> set = new HashSet<>();
+               for(int i = 0;i<list.size();i++){
+                    if(set.contains(list.get(i))){
+                        queue.getChildren().remove(i);
+                        list.remove(i);
+                        i--;
                     }
-                }   
+                    set.add(list.get(i));
+                }
+                set.clear();
+                // for (int i = 0; i < list.size(); i++) {
+                //     for (int j = i + 1; j < list.size(); j++) {
+                //         if (list.get(j).equals(list.get(i))) {
+                //             queue.getChildren().remove(j);
+                //             list.remove(j);
+                //             j--;
+                //         }
+                //     }
+                // }
             }
         });
     }
