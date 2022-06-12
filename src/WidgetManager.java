@@ -190,30 +190,46 @@ public class WidgetManager {
         });
     }
 
-    private void setUpRemoveDublicatesButton(){
+    private void setUpRemoveDublicatesButton() {
         removeDublicates = new Button("Remove Dublicates");
         removeDublicates.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
-               Set<String> set = new HashSet<>();
-               for(int i = 0;i<list.size();i++){
-                    if(set.contains(list.get(i))){
-                        queue.getChildren().remove(i);
+                Set<String> set = new HashSet<>();
+                Set<Integer> indexSet = new HashSet<>(); // saves unique copy of dup index
+                for (int i = 0; i < list.size(); i++) {
+                    if (set.contains(list.get(i))) {
+                        indexSet.add(i);
                         list.remove(i);
                         i--;
                     }
                     set.add(list.get(i));
                 }
                 set.clear();
-                // for (int i = 0; i < list.size(); i++) {
-                //     for (int j = i + 1; j < list.size(); j++) {
-                //         if (list.get(j).equals(list.get(i))) {
-                //             queue.getChildren().remove(j);
-                //             list.remove(j);
-                //             j--;
-                //         }
-                //     }
-                // }
+
+                ArrayList<Integer> indexList = new ArrayList<>();
+                for (int i = 0; i < indexSet.size(); i++) {
+                    indexList.add(indexSet.iterator().next()); // creates a list copy of the set
+                }
+
+                // momentalist funksionon vtm pt nj cift t njejt
+                var str = animateDoubleFade(queue, indexList);
+                str.play();
+
+                // momentalist funksionon vtm pt nj cift t njejt
+                str.setOnFinished(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent arg0) {
+
+                        for (int i = 0; i < indexList.size(); i++) {
+                            int index = indexList.get(i);
+                            queue.getChildren().remove(index); // remove dup nodes
+                        }
+
+                    }
+
+                });
             }
         });
     }
@@ -278,6 +294,19 @@ public class WidgetManager {
         var str = new SequentialTransition();
         str.getChildren().add(ft);
 
+        return str;
+    }
+
+    private static SequentialTransition animateDoubleFade(FlowPane pane, ArrayList<Integer> list) {
+
+        var str = new SequentialTransition();
+
+        for (int i = 0; i < list.size(); i++) {
+            var ft = new FadeTransition(Duration.millis(500), pane.getChildren().get(list.get(i))); // creates fade
+            ft.setFromValue(1.0);
+            ft.setToValue(0.0);
+            str.getChildren().add(ft); // adds to seqtransition
+        }
         return str;
     }
 }
