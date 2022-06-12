@@ -176,7 +176,7 @@ public class WidgetManager {
                     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
                     DropShadow shadow = new DropShadow();
                     shadow.setRadius(10);
-                    shadow.setColor(Color.WHITE);
+                    shadow.setColor(Color.RED);
                     queue.getChildren().get(index).setEffect(shadow);
                     executorService.schedule(() -> setGlow(queue), 2, TimeUnit.SECONDS); // turns off glow after 2 sec
                 }
@@ -210,7 +210,7 @@ public class WidgetManager {
 
     private static Node animateNodeCreation(Node rect) {
 
-        var fltr = new FillTransition(Duration.millis(1000), (Shape) rect, Color.LIGHTSEAGREEN, Color.AQUAMARINE);
+        var fltr = new FillTransition(Duration.millis(1000), (Shape) rect, Color.WHITE, Color.AQUAMARINE);
         fltr.setCycleCount(2);
         fltr.setAutoReverse(true);
 

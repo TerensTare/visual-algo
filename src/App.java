@@ -66,7 +66,7 @@ public class App extends Application {
     
     private static Button buttonStyle(Button button){
 
-        button.setPrefSize(100, 20);
+        button.setPrefSize(100, 40);
         button.setStyle("-fx-font-size:15; -fx-background-color: #a14633; -fx-text-fill: white");
         return button;
     }
