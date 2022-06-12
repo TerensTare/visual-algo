@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -26,25 +25,24 @@ public class App extends Application {
         0, 0, 0, 0, 1, true,                  
         CycleMethod.NO_CYCLE,                 
         new Stop(0, Color.web("#636363")),    
-        new Stop(1, Color.web("#a2ab58")))
-);
+        new Stop(1, Color.web("#a2ab58"))));
 
         WidgetManager widgets = new WidgetManager();
         TextField txt = widgets.textField();
-        Button enqueue = widgets.enqueue();
-        Button dequeue = widgets.dequeue();
-        Button clear = widgets.clear();
-        Button find = widgets.find();
-
+        Button enqueue = buttonStyle(widgets.enqueue());
+        Button dequeue = buttonStyle (widgets.dequeue());
+        Button clear = buttonStyle(widgets.clear());
+        Button find = buttonStyle(widgets.find());
+        
+        
+        HBox buttonPane = new HBox();
+        buttonPane.setPadding(new Insets(0, 0, 20, 20));
+        buttonPane.setSpacing(50);
+        buttonPane.getChildren().addAll(enqueue, dequeue, clear, find);
+        buttonPane.setStyle("-fx-background-color: transparent;");
+       
         HBox inputBox = new HBox();
-        GridPane buttonPane = new GridPane();
-        buttonPane.add(enqueue, 1,1);
-        buttonPane.add(dequeue, 2,1);
-        buttonPane.add(clear, 3,1);
-        buttonPane.add(find, 4,1);
-        buttonPane.setHgap(10);
         inputBox.setStyle("-fx-background-color: transparent;");
-
         inputBox.setPadding(new Insets(0, 0, 20, 0));
         inputBox.setSpacing(60);
         inputBox.getChildren().addAll(txt, buttonPane);
@@ -63,6 +61,14 @@ public class App extends Application {
         stage.setTitle("QUEUES");
         stage.setScene(scene);
         stage.show();
+    }
+
+    
+    private static Button buttonStyle(Button button){
+
+        button.setPrefSize(100, 20);
+        button.setStyle("-fx-font-size:15; -fx-background-color: #a14633; -fx-text-fill: white");
+        return button;
     }
 
     public static void main(String[] args) throws Exception {
