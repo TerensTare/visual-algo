@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -17,45 +18,42 @@ import javafx.stage.Stage;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        
+
         BorderPane bp = new BorderPane();
         bp.setStyle("-fx-background-color: transparent;");
         Scene scene = new Scene(bp, 1200, 600);
         scene.setFill(new RadialGradient(
-        0, 0, 0, 0, 1, true,                  
-        CycleMethod.NO_CYCLE,                 
-        new Stop(0, Color.web("#636363")),    
-        new Stop(1, Color.web("#a2ab58"))));
+                0, 0, 0, 0, 1, true,
+                CycleMethod.NO_CYCLE,
+                new Stop(0, Color.web("#636363")),
+                new Stop(1, Color.web("#a2ab58"))));
 
         WidgetManager widgets = new WidgetManager();
         TextField txt = widgets.textField();
         Button enqueue = buttonStyle(widgets.enqueue());
-        Button dequeue = buttonStyle (widgets.dequeue());
+        Button dequeue = buttonStyle(widgets.dequeue());
         Button clear = buttonStyle(widgets.clear());
         Button find = buttonStyle(widgets.find());
-        Button removeDublicates= buttonStyle(widgets.removeDublicates());
-        
-        HBox buttonPane = new HBox();
-        buttonPane.setPadding(new Insets(0, 0, 20, 20));
-        buttonPane.setSpacing(50);
-        buttonPane.getChildren().addAll(enqueue, dequeue, clear, find, removeDublicates);
+        Button removeDublicates = buttonStyle(widgets.removeDublicates());
+
+        GridPane buttonPane = new GridPane();
+        buttonPane.setHgap(10);
+        buttonPane.addRow(0, enqueue, dequeue, clear, find, removeDublicates);
         buttonPane.setStyle("-fx-background-color: transparent;");
-        
+
         HBox inputBox = new HBox();
         inputBox.setStyle("-fx-background-color: transparent;");
-        inputBox.setPadding(new Insets(0, 0, 20, 0));
-        inputBox.setSpacing(60);
+        inputBox.setPadding(new Insets(20, 20, 20, 20));
+        inputBox.setSpacing(40);
         inputBox.getChildren().addAll(txt, buttonPane);
 
         VBox root = new VBox(inputBox, widgets.queue());
         root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(10, 10, 10, 10));
+        root.setPadding(new Insets(10, 30, 10, 30));
         root.setStyle("-fx-background-color: transparent;");
 
-       
         bp.setTop(root);
         bp.setStyle("-fx-background-color: transparent;");
-
 
         stage.getIcons().add(new Image("/images/icon2.jpg"));
         stage.setTitle("QUEUES");
@@ -63,10 +61,9 @@ public class App extends Application {
         stage.show();
     }
 
-    
-    private static Button buttonStyle(Button button){
+    private static Button buttonStyle(Button button) {
 
-        button.setPrefSize(100, 40);
+        button.setPrefSize(150, 40);
         button.setStyle("-fx-font-size:15; -fx-background-color: #a14633; -fx-text-fill: white");
         return button;
     }
