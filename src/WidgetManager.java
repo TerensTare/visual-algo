@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +37,7 @@ public class WidgetManager {
     private Button enqueue;
     private Button dequeue;
     private Button find;
-
+    private Button removeDublicates;
     private Button clear;
 
     public WidgetManager() {
@@ -53,7 +55,7 @@ public class WidgetManager {
         setupDequeueButton();
         setupFindButton();
         setupClearButton();
-
+        setUpRemoveDublicatesButton();
         // firstly methods which require a non-empty queue are hidden
         showButtons(false);
     }
@@ -80,6 +82,10 @@ public class WidgetManager {
 
     public Button find() {
         return find;
+    }
+
+    public Button removeDublicates(){
+        return removeDublicates;
     }
 
     // private methods
@@ -183,11 +189,37 @@ public class WidgetManager {
             }
         });
     }
+    private void setUpRemoveDublicatesButton(){
+        removeDublicates = new Button("Remove Dublicates");
+        removeDublicates.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent arg0) {
+            //    Set<String> set = new HashSet<>();
+            //    for(int i = 0;i<list.size();i++){
+            //         if(set.contains(list.get(i))){
+                // queue.getChildren().remove(j);
+                // list.remove(j);
+            //         }
+            //         set.add(list.get(i));
+            //     }
+            //     set.clear();
+            for(int i = 0;i<list.size();i++){
+                    for(int j = i+1;j<list.size();j++){
+                        if(list.get(j).equals(list.get(i))){
+                            queue.getChildren().remove(j);
+                            list.remove(j);
+                        }
+                    }
+                }   
+            }
+        });
+    }
 
     private void showButtons(boolean show) {
         dequeue.setVisible(show);
         clear.setVisible(show);
         find.setVisible(show);
+        removeDublicates.setVisible(show);
     }
 
     private static void setGlow(FlowPane queue) {
