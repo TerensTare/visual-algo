@@ -47,7 +47,7 @@ public class WidgetManager {
 
         txt = new TextField();
         txt.setPromptText("Enter a value");
-        txt.setPrefSize(180, 20);
+        txt.setPrefSize(180, 30);
 
         setupEnqueueButton();
         setupDequeueButton();
