@@ -107,7 +107,7 @@ public class WidgetManager {
                     txt.setPromptText("Try writing a number, eg. 10"); // to set the hint text
                     txt.getParent().requestFocus();
                 } else {
-                    StackPane st = createNode(txt);
+                    StackPane st = createNode(txt.getText());
                     queue.getChildren().add(st);
                     list.add(txt.getText().trim()); // adds the contents of txtfield to the list
                     txt.clear();
@@ -283,22 +283,7 @@ public class WidgetManager {
         }
     }
 
-    // TODO: remove this overload
-    private static <T> StackPane createNode(TextField value) {
-        return createNode(value.getText());
-
-        // Rectangle rect = new Rectangle(100, 50);
-        // rect.setArcWidth(30.0);
-        // rect.setArcHeight(20.0);
-
-        // rect = (Rectangle) animateNodeCreation(rect);
-        // StackPane pane = new StackPane(rect, new Label(value.getText()));
-
-        // return pane;
-    }
-
-    // TODO: why do we need <T> here?
-    private static <T> StackPane createNode(String text) {
+    private static StackPane createNode(String text) {
 
         Rectangle rect = new Rectangle(100, 50);
         rect.setArcWidth(30.0);
