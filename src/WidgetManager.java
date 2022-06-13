@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -196,40 +197,42 @@ public class WidgetManager {
             @Override
             public void handle(ActionEvent arg0) {
                 Set<String> set = new HashSet<>();
-                Set<Integer> indexSet = new HashSet<>(); // saves unique copy of dup index
+                // Set<Integer> indexSet = new HashSet<>(); // saves unique copy of dup index
+                ArrayList<Integer> indexList = new ArrayList<>();
+                var str = new SequentialTransition();
                 for (int i = 0; i < list.size(); i++) {
                     if (set.contains(list.get(i))) {
-                        indexSet.add(i);
+                        indexList.add(i);
+                        var ft = new FadeTransition(Duration.millis(500), queue.getChildren().get(i)); // creates fade
+                        ft.setFromValue(1.0);
+                        ft.setToValue(0.0);
+                        str.getChildren().add(ft);
+                        str.play();
+                        str.setOnFinished(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent arg0) {
+                                for(int index: indexList){
+                                    queue.getChildren().remove(index);
+                                }
+                            }
+                        });
+                        // System.out.println(queue.getChildren().get(i));
                         list.remove(i);
                         i--;
                     }
                     set.add(list.get(i));
                 }
+
                 set.clear();
-
-                ArrayList<Integer> indexList = new ArrayList<>();
-                for (int i = 0; i < indexSet.size(); i++) {
-                    indexList.add(indexSet.iterator().next()); // creates a list copy of the set
-                }
+                // for(int element: indexList){
+                // System.out.println(element);
+                // }
+                // momentalist funksionon vtm pt nj cift t njejt
+                // var str = animateDoubleFade(queue, indexList);
+                // str.play();
 
                 // momentalist funksionon vtm pt nj cift t njejt
-                var str = animateDoubleFade(queue, indexList);
-                str.play();
 
-                // momentalist funksionon vtm pt nj cift t njejt
-                str.setOnFinished(new EventHandler<ActionEvent>() {
-
-                    @Override
-                    public void handle(ActionEvent arg0) {
-
-                        for (int i = 0; i < indexList.size(); i++) {
-                            int index = indexList.get(i);
-                            queue.getChildren().remove(index); // remove dup nodes
-                        }
-
-                    }
-
-                });
             }
         });
     }
