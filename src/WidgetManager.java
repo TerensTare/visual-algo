@@ -37,8 +37,9 @@ public class WidgetManager {
     private Button enqueue;
     private Button dequeue;
     private Button find;
-    private Button removeDublicates;
+    private Button removeDuplicates;
     private Button clear;
+    private Button sort;
 
     public WidgetManager() {
         list = new ArrayList<>();
@@ -55,7 +56,9 @@ public class WidgetManager {
         setupDequeueButton();
         setupFindButton();
         setupClearButton();
-        setUpRemoveDublicatesButton();
+        setupRemoveDuplicatesButton();
+        setupSortButton();
+
         // firstly methods which require a non-empty queue are hidden
         showButtons(false);
     }
@@ -84,8 +87,12 @@ public class WidgetManager {
         return find;
     }
 
-    public Button removeDublicates() {
-        return removeDublicates;
+    public Button removeDuplicates() {
+        return removeDuplicates;
+    }
+
+    public Button sort() {
+        return sort;
     }
 
     // private methods
@@ -187,9 +194,9 @@ public class WidgetManager {
         });
     }
 
-    private void setUpRemoveDublicatesButton() {
-        removeDublicates = new Button("Remove Dublicates");
-        removeDublicates.setOnAction(new EventHandler<ActionEvent>() {
+    private void setupRemoveDuplicatesButton() {
+        removeDuplicates = new Button("Remove Duplicates");
+        removeDuplicates.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
                 Set<String> set = new HashSet<>();
@@ -244,11 +251,29 @@ public class WidgetManager {
 
     }
 
+    private void setupSortButton() {
+        sort = new Button("Sort");
+
+        sort.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent arg0) {
+                list.sort((lhs, rhs) -> Integer.parseInt(lhs) - Integer.parseInt(rhs));
+
+                queue.getChildren().removeAll(queue.getChildren());
+                for (String s : list) {
+                    StackPane st = createNode(s);
+                    queue.getChildren().add(st);
+                }
+            }
+        });
+    }
+
     private void showButtons(boolean show) {
         dequeue.setVisible(show);
         clear.setVisible(show);
         find.setVisible(show);
-        removeDublicates.setVisible(show);
+        removeDuplicates.setVisible(show);
+        sort.setVisible(show);
     }
 
     private static void setGlow(FlowPane queue) {
@@ -258,13 +283,29 @@ public class WidgetManager {
         }
     }
 
+    // TODO: remove this overload
     private static <T> StackPane createNode(TextField value) {
+        return createNode(value.getText());
+
+        // Rectangle rect = new Rectangle(100, 50);
+        // rect.setArcWidth(30.0);
+        // rect.setArcHeight(20.0);
+
+        // rect = (Rectangle) animateNodeCreation(rect);
+        // StackPane pane = new StackPane(rect, new Label(value.getText()));
+
+        // return pane;
+    }
+
+    // TODO: why do we need <T> here?
+    private static <T> StackPane createNode(String text) {
+
         Rectangle rect = new Rectangle(100, 50);
         rect.setArcWidth(30.0);
         rect.setArcHeight(20.0);
 
         rect = (Rectangle) animateNodeCreation(rect);
-        StackPane pane = new StackPane(rect, new Label(value.getText()));
+        StackPane pane = new StackPane(rect, new Label(text));
 
         return pane;
     }

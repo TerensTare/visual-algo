@@ -34,11 +34,12 @@ public class App extends Application {
         Button dequeue = buttonStyle(widgets.dequeue());
         Button clear = buttonStyle(widgets.clear());
         Button find = buttonStyle(widgets.find());
-        Button removeDublicates = buttonStyle(widgets.removeDublicates());
+        Button removeDuplicates = buttonStyle(widgets.removeDuplicates());
+        Button sort = buttonStyle(widgets.sort());
 
         GridPane buttonPane = new GridPane();
         buttonPane.setHgap(10);
-        buttonPane.addRow(0, enqueue, dequeue, clear, find, removeDublicates);
+        buttonPane.addRow(0, enqueue, dequeue, clear, find, removeDuplicates, sort);
         buttonPane.setStyle("-fx-background-color: transparent;");
 
         HBox inputBox = new HBox();
