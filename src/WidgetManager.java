@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -145,16 +144,13 @@ public class WidgetManager {
             @Override
             public void handle(ActionEvent arg0) {
 
-                var str = animateQueueFade(queue, 1.0, 0.0);
+                var str = animateClear(queue);
                 str.play();
                 str.setOnFinished(new EventHandler<ActionEvent>() {
 
                     @Override
                     public void handle(ActionEvent arg0) {
                         queue.getChildren().removeAll(queue.getChildren());
-                        list.clear();
-                        var str = animateQueueFade(queue, 0.0, 1.0);
-                        str.play();
                     }
 
                 });
@@ -198,43 +194,54 @@ public class WidgetManager {
             public void handle(ActionEvent arg0) {
                 Set<String> set = new HashSet<>();
                 // Set<Integer> indexSet = new HashSet<>(); // saves unique copy of dup index
-                ArrayList<Integer> indexList = new ArrayList<>();
-                var str = new SequentialTransition();
+                // ArrayList<Integer> indexList = new ArrayList<>();
+                ArrayList<String> oldList = new ArrayList<>();
+                oldList.addAll(list);
+                // var str = new SequentialTransition();
                 for (int i = 0; i < list.size(); i++) {
                     if (set.contains(list.get(i))) {
-                        indexList.add(i);
-                        var ft = new FadeTransition(Duration.millis(500), queue.getChildren().get(i)); // creates fade
-                        ft.setFromValue(1.0);
-                        ft.setToValue(0.0);
-                        str.getChildren().add(ft);
-                        str.play();
-                        str.setOnFinished(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent arg0) {
-                                for(int index: indexList){
-                                    queue.getChildren().remove(index);
-                                }
-                            }
-                        });
-                        // System.out.println(queue.getChildren().get(i));
+                        // indexSet.add(i);
+                        // var ft = new FadeTransition(Duration.millis(500),
+                        // queue.getChildren().get(i)); // creates fade
+                        // ft.setFromValue(1.0);
+                        // ft.setToValue(0.0);
+                        // str.getChildren().add(ft);
+                        // str.play();
+                        queue.getChildren().remove(i);
                         list.remove(i);
                         i--;
                     }
                     set.add(list.get(i));
                 }
-
                 set.clear();
-                // for(int element: indexList){
-                // System.out.println(element);
+
+                // indexList.addAll(indexSet);
+                // str.setOnFinished(new EventHandler<ActionEvent>() {
+                // @Override
+                // public void handle(ActionEvent arg0) {
+                // int cnt = 1;
+
+                // for (int i = 0; i < indexList.size(); i++) {
+                // int index = indexList.get(i);
+                // if (i > 0) {
+                // index -= cnt;
+                // cnt++;
                 // }
-                // momentalist funksionon vtm pt nj cift t njejt
-                // var str = animateDoubleFade(queue, indexList);
-                // str.play();
+                // StackPane pane = (StackPane) queue.getChildren().get(index);
+                // Label lb = (Label) pane.getChildren().get(1);
+                // System.out.println(lb.getText());
+                // System.out.println(index);
+                // queue.getChildren().remove(index);
+                // }
 
-                // momentalist funksionon vtm pt nj cift t njejt
+                // }
 
+                // });
+
+                // set.clear();
             }
         });
+
     }
 
     private void showButtons(boolean show) {
@@ -288,28 +295,19 @@ public class WidgetManager {
         return str;
     }
 
-    private static SequentialTransition animateQueueFade(FlowPane pane, double start, double end) {
-
-        var ft = new FadeTransition(Duration.millis(500), pane);
-        ft.setFromValue(start);
-        ft.setToValue(end);
-
-        var str = new SequentialTransition();
-        str.getChildren().add(ft);
-
-        return str;
-    }
-
-    private static SequentialTransition animateDoubleFade(FlowPane pane, ArrayList<Integer> list) {
+    private static SequentialTransition animateClear(FlowPane queue) {
 
         var str = new SequentialTransition();
 
-        for (int i = 0; i < list.size(); i++) {
-            var ft = new FadeTransition(Duration.millis(500), pane.getChildren().get(list.get(i))); // creates fade
+        for (int i = 0; i < queue.getChildren().size(); i++) {
+
+            var ft = new FadeTransition(Duration.millis(300), queue.getChildren().get(i)); // creates fade
             ft.setFromValue(1.0);
             ft.setToValue(0.0);
-            str.getChildren().add(ft); // adds to seqtransition
+            str.getChildren().add(ft);
         }
+
         return str;
     }
+
 }
