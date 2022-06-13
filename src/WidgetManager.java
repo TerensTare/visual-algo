@@ -158,6 +158,7 @@ public class WidgetManager {
                     @Override
                     public void handle(ActionEvent arg0) {
                         queue.getChildren().removeAll(queue.getChildren());
+                        list.clear();
                     }
 
                 });
@@ -200,28 +201,36 @@ public class WidgetManager {
             @Override
             public void handle(ActionEvent arg0) {
                 Set<String> set = new HashSet<>();
-                // Set<Integer> indexSet = new HashSet<>(); // saves unique copy of dup index
-                // ArrayList<Integer> indexList = new ArrayList<>();
-                ArrayList<String> oldList = new ArrayList<>();
-                oldList.addAll(list);
-                // var str = new SequentialTransition();
+                //ArrayList<String> oldList = new ArrayList<>();
+                //oldList.addAll(list);
+                var str = new SequentialTransition();
                 for (int i = 0; i < list.size(); i++) {
                     if (set.contains(list.get(i))) {
-                        // indexSet.add(i);
-                        // var ft = new FadeTransition(Duration.millis(500),
-                        // queue.getChildren().get(i)); // creates fade
-                        // ft.setFromValue(1.0);
-                        // ft.setToValue(0.0);
-                        // str.getChildren().add(ft);
-                        // str.play();
-                        queue.getChildren().remove(i);
-                        list.remove(i);
-                        i--;
+                        var ft = new FadeTransition(Duration.millis(500), queue.getChildren().get(i)); // creates fade
+                        ft.setFromValue(1.0);
+                        ft.setToValue(0.0);
+                        str.getChildren().add(ft);
                     }
                     set.add(list.get(i));
                 }
                 set.clear();
-
+                str.play();
+                //list.clear();
+                //list.addAll(oldList);
+                str.setOnFinished(new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent arg0) {
+                        System.out.println(list.size());
+                        for (int i = 0; i < list.size(); i++) {
+                            if (set.contains(list.get(i))) {
+                                queue.getChildren().remove(i);
+                                list.remove(i);
+                                i--;
+                            }
+                            set.add(list.get(i));
+                        }
+                    }
+                });
+                set.clear();
                 // indexList.addAll(indexSet);
                 // str.setOnFinished(new EventHandler<ActionEvent>() {
                 // @Override
@@ -230,7 +239,7 @@ public class WidgetManager {
 
                 // for (int i = 0; i < indexList.size(); i++) {
                 // int index = indexList.get(i);
-                // if (i > 0) {
+                // if (i > 0) {+
                 // index -= cnt;
                 // cnt++;
                 // }
