@@ -50,7 +50,7 @@ public class WidgetManager {
 
         txt = new TextField();
         txt.setPromptText("Enter a value");
-        txt.setPrefSize(180, 30);
+        txt.setPrefSize(180, 40);
 
         setupEnqueueButton();
         setupDequeueButton();
@@ -294,12 +294,15 @@ public class WidgetManager {
 
     private static StackPane createNode(String text) {
 
-        Rectangle rect = new Rectangle(100, 50);
+        Rectangle rect = new Rectangle(150, 75);
         rect.setArcWidth(30.0);
         rect.setArcHeight(20.0);
 
         rect = (Rectangle) animateNodeCreation(rect);
-        StackPane pane = new StackPane(rect, new Label(text));
+        Label content = new Label(text);
+
+        content.setStyle("-fx-font-size:15;-fx-font-weight: Bold;");
+        StackPane pane = new StackPane(rect, content);
 
         return pane;
     }
