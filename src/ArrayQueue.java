@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -56,8 +57,16 @@ public class ArrayQueue<T> implements Queue<T> {
 
     @Override
     public void removeDuplicates() {
-        for (int j = 0; j < elements.size() - 1; ++j) {
-            removeDuplicatesImpl(j, j + 1);
+        var set = new HashSet<T>();
+
+        for (int i = 0; i < elements.size(); i++) {
+            if (set.contains(elements.get(i))) {
+                pane.getChildren().remove(i);
+                elements.remove(i);
+                --i;
+            } else {
+                set.add(elements.get(i));
+            }
         }
     }
 
@@ -95,33 +104,5 @@ public class ArrayQueue<T> implements Queue<T> {
     @Override
     public FlowPane pane() {
         return pane;
-    }
-
-    // helper methods
-    private void removeDuplicatesImpl(int j, int i) {
-        if (i == elements.size()) {
-            return;
-        } else {
-            if (elements.get(j).equals(elements.get(i))) {
-                var anim = QueueFX.animateNodeRemoval(pane.getChildren().get(i));
-                anim.play();
-
-                Integer idx = i;
-
-                anim.setOnFinished(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent e) {
-                        int index = idx.intValue();
-
-                        pane.getChildren().remove(index);
-                        elements.remove(index);
-
-                        removeDuplicatesImpl(j, index);
-                    }
-                });
-            } else {
-                removeDuplicatesImpl(j, i + 1);
-            }
-        }
     }
 }
