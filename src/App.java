@@ -3,6 +3,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -29,7 +30,9 @@ public class App extends Application {
                 new Stop(1, Color.web("#a2ab58"))));
 
         WidgetManager widgets = new WidgetManager();
+        ChoiceBox<String> implBox = widgets.implBox();
         TextField txt = widgets.textField();
+
         Button enqueue = buttonStyle(widgets.enqueue());
         Button dequeue = buttonStyle(widgets.dequeue());
         Button clear = buttonStyle(widgets.clear());
@@ -47,7 +50,7 @@ public class App extends Application {
         inputBox.setSpacing(40);
         inputBox.getChildren().addAll(txt, buttonPane);
 
-        VBox root = new VBox(inputBox, widgets.queue());
+        VBox root = new VBox(inputBox, widgets.queue(), implBox);
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(10, 30, 10, 30));
         root.setStyle("-fx-background-color: transparent;");

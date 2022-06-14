@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 // TODO:
@@ -102,7 +103,7 @@ public class ArrayQueue<T> implements Queue<T> {
     }
 
     @Override
-    public FlowPane pane() {
+    public Pane pane() {
         return pane;
     }
 }

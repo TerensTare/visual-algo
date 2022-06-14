@@ -1,6 +1,6 @@
 package ADT;
 
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 
 public interface Queue<T> {
     // backend
@@ -17,5 +17,5 @@ public interface Queue<T> {
     public int find(T element);
 
     // fronted
-    public FlowPane pane();
+    public Pane pane();
 }

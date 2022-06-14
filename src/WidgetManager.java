@@ -3,9 +3,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
+
 // Checklist before inserting a new widget:
 // 1. Add a variable to WidgetManager
 // 2. (optional) Add a setup<WidgetName> method to WidgetManager
@@ -15,7 +17,9 @@ import javafx.scene.layout.FlowPane;
 public class WidgetManager {
     private Queue<Integer> queue; // queue frontend
 
+    private ChoiceBox<String> impl; // choicebox for choosing the implementation
     private TextField txt; // inputs are saved here to be accessed from the buttons
+
     private Button enqueue;
     private Button dequeue;
     private Button find;
@@ -24,6 +28,18 @@ public class WidgetManager {
 
     public WidgetManager() {
         queue = new ArrayQueue<>();
+
+        impl = new ChoiceBox<>();
+        impl.getItems().addAll("Array", "Stack");
+        impl.valueProperty().set("Array");
+
+        impl.setOnAction(e -> {
+            if (impl.getValue().equals("Array")) {
+                queue = new ArrayQueue<>();
+            } else if (impl.getValue().equals("Stack")) {
+                queue = new StackQueue<>();
+            }
+        });
 
         txt = new TextField();
         txt.setPromptText("Enter a value");
@@ -39,8 +55,12 @@ public class WidgetManager {
         showButtons(false);
     }
 
-    public FlowPane queue() {
+    public Pane queue() {
         return queue.pane();
+    }
+
+    public ChoiceBox<String> implBox() {
+        return impl;
     }
 
     public TextField textField() {

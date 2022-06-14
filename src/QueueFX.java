@@ -21,22 +21,15 @@ public class QueueFX {
     }
 
     public static StackPane createNode(String text) {
+        Rectangle rect = animateNodeCreation(node());
 
-        Rectangle rect = new Rectangle(100, 50);
-        rect.setArcWidth(30.0);
-        rect.setArcHeight(20.0);
-
-        rect = (Rectangle) animateNodeCreation(rect);
         StackPane pane = new StackPane(rect, new Label(text));
-
         return pane;
     }
 
-    public static Node animateNodeCreation(Node rect) {
+    public static Rectangle animateNodeCreation(Rectangle rect) {
 
-        var fltr = new FillTransition(Duration.seconds(1), (Shape) rect, Color.WHITE, Color.AQUAMARINE);
-        fltr.setCycleCount(2);
-        fltr.setAutoReverse(true);
+        var fltr = fill(rect);
 
         var str = new SequentialTransition();
         str.getChildren().add(fltr);
@@ -45,9 +38,23 @@ public class QueueFX {
         return rect;
     }
 
+    public static Rectangle node() {
+        Rectangle rect = new Rectangle(100, 50);
+        rect.setArcWidth(30.0);
+        rect.setArcHeight(20.0);
+        return rect;
+    }
+
+    public static FillTransition fill(Shape shape) {
+        var fltr = new FillTransition(Duration.seconds(1), shape, Color.WHITE, Color.AQUAMARINE);
+        fltr.setCycleCount(2);
+        fltr.setAutoReverse(true);
+        return fltr;
+    }
+
     public static SequentialTransition animateNodeRemoval(Node node) { // creates seqtransition
 
-        var ft = new FadeTransition(Duration.millis(500), node);
+        var ft = new FadeTransition(Duration.seconds(2), node);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
 
