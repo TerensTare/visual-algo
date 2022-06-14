@@ -43,7 +43,7 @@ public class App extends Application {
 
         HBox inputBox = new HBox();
         inputBox.setStyle("-fx-background-color: transparent;");
-        inputBox.setPadding(new Insets(20, 20, 20, 20));
+        inputBox.setPadding(new Insets(20, 5, 55, 5));
         inputBox.setSpacing(40);
         inputBox.getChildren().addAll(txt, buttonPane);
 
@@ -63,7 +63,7 @@ public class App extends Application {
 
     private static Button buttonStyle(Button button) {
 
-        button.setPrefSize(150, 40);
+        button.setPrefSize(160, 40);
         button.setStyle("-fx-font-size:15; -fx-background-color: #a14633; -fx-text-fill: white");
         return button;
     }

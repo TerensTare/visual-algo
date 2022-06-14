@@ -27,7 +27,7 @@ public class WidgetManager {
 
         txt = new TextField();
         txt.setPromptText("Enter a value");
-        txt.setPrefSize(180, 30);
+        txt.setPrefSize(220, 40);
 
         setupEnqueueButton();
         setupDequeueButton();
@@ -76,7 +76,7 @@ public class WidgetManager {
             @Override
             public void handle(ActionEvent event) {
                 if (txt.getText().trim().isEmpty()) {
-                    txt.setPromptText("Try writing a number, eg. 10"); // to set the hint text
+                    txt.setPromptText("Try writing a number."); // to set the hint text
                     txt.getParent().requestFocus();
                 } else {
                     Integer value = Integer.parseInt(txt.getText());
