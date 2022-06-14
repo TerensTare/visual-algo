@@ -35,11 +35,10 @@ public class App extends Application {
         Button clear = buttonStyle(widgets.clear());
         Button find = buttonStyle(widgets.find());
         Button removeDuplicates = buttonStyle(widgets.removeDuplicates());
-        Button sort = buttonStyle(widgets.sort());
 
         GridPane buttonPane = new GridPane();
         buttonPane.setHgap(10);
-        buttonPane.addRow(0, enqueue, dequeue, clear, find, removeDuplicates, sort);
+        buttonPane.addRow(0, enqueue, dequeue, clear, find, removeDuplicates);
         buttonPane.setStyle("-fx-background-color: transparent;");
 
         HBox inputBox = new HBox();
