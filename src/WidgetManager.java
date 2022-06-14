@@ -294,7 +294,7 @@ public class WidgetManager {
 
     private static StackPane createNode(String text) {
 
-        Rectangle rect = new Rectangle(150, 75);
+        Rectangle rect = new Rectangle(120, 60);
         rect.setArcWidth(30.0);
         rect.setArcHeight(20.0);
 
