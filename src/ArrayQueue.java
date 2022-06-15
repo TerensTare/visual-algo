@@ -1,16 +1,20 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import ADT.Queue;
+import javafx.animation.FadeTransition;
+import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 // TODO:
 // animate removeDuplicates
@@ -58,17 +62,32 @@ public class ArrayQueue<T> implements Queue<T> {
 
     @Override
     public void removeDuplicates() {
-        var set = new HashSet<T>();
-
+        Set<T> set = new HashSet<>();
+        var str = new SequentialTransition();
         for (int i = 0; i < elements.size(); i++) {
             if (set.contains(elements.get(i))) {
-                pane.getChildren().remove(i);
-                elements.remove(i);
-                --i;
-            } else {
-                set.add(elements.get(i));
+                var ft = new FadeTransition(Duration.millis(500), pane.getChildren().get(i)); // creates fade
+                ft.setFromValue(1.0);
+                ft.setToValue(0.0);
+                str.getChildren().add(ft);
             }
+            set.add(elements.get(i));
         }
+        set.clear();
+        str.play();
+        str.setOnFinished(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent arg0) {
+                for (int i = 0; i < elements.size(); i++) {
+                    if (set.contains(elements.get(i))) {
+                        pane.getChildren().remove(i);
+                        elements.remove(i);
+                        i--;
+                    }
+                    set.add(elements.get(i));
+                }
+            }
+        });
+        set.clear();
     }
 
     @Override
@@ -105,5 +124,10 @@ public class ArrayQueue<T> implements Queue<T> {
     @Override
     public Pane pane() {
         return pane;
+    }
+
+    @Override
+    public int size() {
+        return elements.size();
     }
 }

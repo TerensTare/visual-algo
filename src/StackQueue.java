@@ -107,4 +107,9 @@ public class StackQueue<T> implements Queue<T> {
 
         // fromPane.getChildren().clear();
     }
+
+    @Override
+    public int size() {
+        return stack1.size();
+    }
 }

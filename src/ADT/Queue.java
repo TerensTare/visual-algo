@@ -8,9 +8,9 @@ public interface Queue<T> {
 
     public T dequeue();
 
-    // public boolean isEmpty();
-
     public void removeDuplicates();
+
+    public int size();
 
     public void clear();
 

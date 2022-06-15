@@ -1,5 +1,4 @@
 import ADT.Queue;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -109,7 +108,9 @@ public class WidgetManager {
         dequeue.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
-                if (queue.dequeue() == null) {
+                queue.dequeue();
+
+                if (queue.size() == 1) {
                     showButtons(false);
                 }
             }
@@ -135,8 +136,18 @@ public class WidgetManager {
         find.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent arg0) {
+                String text = txt.getText().trim();
 
-                Integer value = Integer.parseInt(txt.getText());
+                if (text == "") {
+                    Alert noText = new Alert(AlertType.INFORMATION);
+                    noText.setTitle("Alert");
+                    noText.setHeaderText("No Inputs Given!");
+                    noText.setContentText("Please input some value");
+                    noText.show();
+                    return;
+                }
+
+                Integer value = Integer.parseInt(text);
                 if (queue.find(value) == -1) {
                     Alert noText = new Alert(AlertType.INFORMATION);
                     noText.setTitle("Alert");
@@ -161,7 +172,7 @@ public class WidgetManager {
 
     }
 
-    private void showButtons(boolean show) {
+    public void showButtons(boolean show) {
         dequeue.setVisible(show);
         clear.setVisible(show);
         find.setVisible(show);

@@ -54,9 +54,20 @@ public class App extends Application {
 
         root = new VBox(inputBox, widgets.queue(), implBox);
         implBox.setOnAction(e -> {
-            widgets.queue = new StackQueue<>();
-            root = new VBox(inputBox, widgets.queue(), implBox);
-            bp.setTop(root);
+            switch (implBox.getValue()) {
+                case "Array":
+                    widgets.queue = new ArrayQueue<>();
+                    root = new VBox(inputBox, widgets.queue(), implBox);
+                    bp.setTop(root);
+                    break;
+
+                case "Stack":
+                    widgets.queue = new StackQueue<>();
+                    root = new VBox(inputBox, widgets.queue(), implBox);
+                    bp.setTop(root);
+                    break;
+            }
+
         });
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(10, 30, 10, 30));
