@@ -1,4 +1,5 @@
 import ADT.Queue;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
@@ -15,7 +16,7 @@ import javafx.scene.layout.Pane;
 // 4. If you did step 2. add a call to setup<WidgetName> in the constructor
 
 public class WidgetManager {
-    private Queue<Integer> queue; // queue frontend
+    public Queue<Integer> queue; // queue frontend
 
     private ChoiceBox<String> impl; // choicebox for choosing the implementation
     private TextField txt; // inputs are saved here to be accessed from the buttons
@@ -32,14 +33,6 @@ public class WidgetManager {
         impl = new ChoiceBox<>();
         impl.getItems().addAll("Array", "Stack");
         impl.valueProperty().set("Array");
-
-        impl.setOnAction(e -> {
-            if (impl.getValue().equals("Array")) {
-                queue = new ArrayQueue<>();
-            } else if (impl.getValue().equals("Stack")) {
-                queue = new StackQueue<>();
-            }
-        });
 
         txt = new TextField();
         txt.setPromptText("Enter a value");

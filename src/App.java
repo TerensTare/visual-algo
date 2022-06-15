@@ -17,6 +17,8 @@ import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 
 public class App extends Application {
+    private VBox root;
+
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -50,7 +52,12 @@ public class App extends Application {
         inputBox.setSpacing(40);
         inputBox.getChildren().addAll(txt, buttonPane);
 
-        VBox root = new VBox(inputBox, widgets.queue(), implBox);
+        root = new VBox(inputBox, widgets.queue(), implBox);
+        implBox.setOnAction(e -> {
+            widgets.queue = new StackQueue<>();
+            root = new VBox(inputBox, widgets.queue(), implBox);
+            bp.setTop(root);
+        });
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(10, 30, 10, 30));
         root.setStyle("-fx-background-color: transparent;");
