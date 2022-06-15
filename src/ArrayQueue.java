@@ -105,20 +105,28 @@ public class ArrayQueue<T> implements Queue<T> {
     }
 
     @Override
-    public int find(T element) {
-        int index = elements.indexOf(element);
-        if (index != -1) {
+    public ArrayList<Integer> find(T element) {
+        ArrayList<Integer> indexList = new ArrayList<>();
+        for (int i = 0; i < elements.size(); i++) {
+            if (elements.get(i) == element)
+                indexList.add(i);
+        }
+
+        if (!indexList.isEmpty()) {
             DropShadow shadow = new DropShadow();
             shadow.setRadius(10);
             shadow.setColor(Color.RED);
 
-            pane.getChildren().get(index).setEffect(shadow);
+            for (int i = 0; i < indexList.size(); i++) {
+                int index = indexList.get(i);
+                pane.getChildren().get(index).setEffect(shadow);
+            }
 
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.schedule(() -> QueueFX.setGlow(pane), 2, TimeUnit.SECONDS);
         }
 
-        return index;
+        return indexList;
     }
 
     @Override

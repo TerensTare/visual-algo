@@ -148,7 +148,7 @@ public class WidgetManager {
                 }
 
                 Integer value = Integer.parseInt(text);
-                if (queue.find(value) == -1) {
+                if (queue.find(value) == null) {
                     Alert noText = new Alert(AlertType.INFORMATION);
                     noText.setTitle("Alert");
                     noText.setHeaderText("No Such Inputs!");

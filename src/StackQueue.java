@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Stack;
 
 import ADT.Queue;
@@ -69,9 +70,9 @@ public class StackQueue<T> implements Queue<T> {
     }
 
     @Override
-    public int find(T element) {
+    public ArrayList<Integer> find(T element) {
         // TODO Auto-generated method stub
-        return 0;
+        return null;
     }
 
     @Override

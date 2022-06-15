@@ -1,5 +1,7 @@
 package ADT;
 
+import java.util.ArrayList;
+
 import javafx.scene.layout.Pane;
 
 public interface Queue<T> {
@@ -14,7 +16,7 @@ public interface Queue<T> {
 
     public void clear();
 
-    public int find(T element);
+    public ArrayList<Integer> find(T element);
 
     // fronted
     public Pane pane();
