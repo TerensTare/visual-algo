@@ -64,6 +64,11 @@ public class App extends Application {
                     break;
             }
 
+            dequeue.setVisible(false);
+            clear.setVisible(false);
+            find.setVisible(false);
+            removeDuplicates.setVisible(false);
+
             bp.setCenter(widgets.queue());
         });
 

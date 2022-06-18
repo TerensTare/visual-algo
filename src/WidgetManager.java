@@ -174,8 +174,17 @@ public class WidgetManager {
 
     private void showButtons(boolean show) {
         dequeue.setVisible(show);
-        clear.setVisible(show);
-        find.setVisible(show);
-        removeDuplicates.setVisible(show);
+
+        // These actions don't work with the stack implementation.
+        // So, hide them when the stack implementation is chosen.
+        if (queue instanceof StackQueue<Integer>) {
+            clear.setVisible(false);
+            find.setVisible(false);
+            removeDuplicates.setVisible(false);
+        } else {
+            clear.setVisible(show);
+            find.setVisible(show);
+            removeDuplicates.setVisible(show);
+        }
     }
 }
