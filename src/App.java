@@ -27,9 +27,10 @@ public class App extends Application {
                 CycleMethod.NO_CYCLE,
                 new Stop(0, Color.web("#636363")),
                 new Stop(1, Color.web("#a2ab58"))));
-
+        
+        scene.getStylesheets().add(getClass().getResource("StyleSheet.css").toExternalForm());
         WidgetManager widgets = new WidgetManager();
-        ChoiceBox<String> implBox = widgets.implBox();
+        ChoiceBox<String> implBox = (widgets.implBox());
         TextField txt = widgets.textField();
 
         Button enqueue = buttonStyle(widgets.enqueue());
@@ -52,7 +53,7 @@ public class App extends Application {
         bp.setTop(inputBox);
         bp.setCenter(widgets.queue());
         bp.setBottom(implBox);
-
+      
         implBox.setOnAction(e -> {
             switch (implBox.getValue()) {
                 case "Array":
@@ -74,8 +75,9 @@ public class App extends Application {
 
         BorderPane.setAlignment(bp.getTop(), Pos.CENTER);
         BorderPane.setAlignment(bp.getCenter(), Pos.CENTER);
-        BorderPane.setAlignment(bp.getBottom(), Pos.TOP_RIGHT);
-        bp.setPadding(new Insets(10, 30, 10, 30));
+        BorderPane.setAlignment(bp.getBottom(), Pos.CENTER);
+        
+        bp.setPadding(new Insets(10, 30, 50, 30));
         bp.setStyle("-fx-background-color: transparent;");
 
         stage.getIcons().add(new Image("/images/icon2.jpg"));
