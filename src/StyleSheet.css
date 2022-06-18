@@ -1,0 +1,33 @@
+.choice-box .context-menu {
+    -fx-background-color: #a14633;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #FFDCA3;
+}
+
+.choice-box .menu-item>.label {
+    -fx-text-fill: white;
+}
+
+.choice-box .menu-item:focused>.label {
+    -fx-text-fill: black;
+}
+
+.choice-box {
+    -fx-background-color: #a14633;
+    -fx-mark-color: #FFDCA3;
+    -fx-font-size: 15px;
+
+    -fx-pref-width: 160px;
+    -fx-pref-height: 40px;
+}
+
+.choice-box>.label {
+    -fx-text-fill: white;
+}
+
+.choice-box .context-menu {
+    -fx-pref-width: 160;
+
+}
