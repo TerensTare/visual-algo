@@ -9,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
@@ -17,8 +16,6 @@ import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 
 public class App extends Application {
-    private VBox root;
-
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -52,28 +49,28 @@ public class App extends Application {
         inputBox.setSpacing(40);
         inputBox.getChildren().addAll(txt, buttonPane);
 
-        root = new VBox(inputBox, widgets.queue(), implBox);
+        bp.setTop(inputBox);
+        bp.setCenter(widgets.queue());
+        bp.setBottom(implBox);
+
         implBox.setOnAction(e -> {
             switch (implBox.getValue()) {
                 case "Array":
                     widgets.queue = new ArrayQueue<>();
-                    root = new VBox(inputBox, widgets.queue(), implBox);
-                    bp.setTop(root);
                     break;
 
                 case "Stack":
                     widgets.queue = new StackQueue<>();
-                    root = new VBox(inputBox, widgets.queue(), implBox);
-                    bp.setTop(root);
                     break;
             }
 
+            bp.setCenter(widgets.queue());
         });
-        root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(10, 30, 10, 30));
-        root.setStyle("-fx-background-color: transparent;");
 
-        bp.setTop(root);
+        BorderPane.setAlignment(bp.getTop(), Pos.CENTER);
+        BorderPane.setAlignment(bp.getCenter(), Pos.CENTER);
+        BorderPane.setAlignment(bp.getBottom(), Pos.TOP_RIGHT);
+        bp.setPadding(new Insets(10, 30, 10, 30));
         bp.setStyle("-fx-background-color: transparent;");
 
         stage.getIcons().add(new Image("/images/icon2.jpg"));

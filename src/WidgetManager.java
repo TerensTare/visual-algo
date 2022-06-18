@@ -172,7 +172,7 @@ public class WidgetManager {
 
     }
 
-    public void showButtons(boolean show) {
+    private void showButtons(boolean show) {
         dequeue.setVisible(show);
         clear.setVisible(show);
         find.setVisible(show);
